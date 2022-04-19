@@ -1,6 +1,12 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const boardListRouter = require('./boardList');
+const usersRouter = require('./users')
+// const indexController = require("../controller/index");
 
-const indexController = require("../controller/index");
+// localhost:8080
 
-router.get("/index", indexController.getRoot);
+router.get('/users', usersRouter);
+router.get('/board', boardListRouter);
+
+module.exports = router;
