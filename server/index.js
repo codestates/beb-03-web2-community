@@ -5,10 +5,10 @@ const app = express();
 const mongoose = require('mongoose');
 const usersRouter = require("./routes/users");
 const boardRouter = require("./routes/board")
-const { PORT, USER_NAME, DATABASE_NAME, DATABASE_PASSWORD, COLLECTION_NAME } = process.env;
+const { PORT, USER_NAME, USER_PASSWORD, CLOUD_NAME, DATABASE_NAME } = process.env;
 
 const MONGO_URI = 
-`mongodb+srv://${USER_NAME}:${DATABASE_PASSWORD}@${DATABASE_NAME}.ej0vx.mongodb.net/${COLLECTION_NAME}`
+`mongodb+srv://${USER_NAME}:${USER_PASSWORD}@${CLOUD_NAME}.ej0vx.mongodb.net/${DATABASE_NAME}`
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log('MongoDB connected...'))
