@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require('mongoose');
-const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
 const boardRouter = require("./routes/board")
 const { PORT, USER_NAME, DATABASE_NAME, DATABASE_PASSWORD, COLLECTION_NAME } = process.env;
 
@@ -22,8 +22,8 @@ app.use(
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/', indexRouter);
 app.use('/board', boardRouter);
+app.use('/users', usersRouter);
 
 app.get("/", (req, res) => {});
 app.listen(PORT, () => {
