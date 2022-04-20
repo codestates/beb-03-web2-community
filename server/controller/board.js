@@ -6,8 +6,9 @@ exports.insertBoard = (req, res) => {
     // 저장해야할 정보 가져오기
     var title = req.body.title;
     var content = req.body.content;
+    var username = req.body.username;
 
-	var boardData = new board({title:title,content:content});
+	var boardData = new board({title:title,content:content,userName:username});
 
     //mongodb 저장
     boardData.save((err)=>{
