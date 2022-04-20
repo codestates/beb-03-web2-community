@@ -1,3 +1,0 @@
-exports.getRoot = (req, res) => {
-	
-};
