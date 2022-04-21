@@ -1,5 +1,5 @@
 const fs = require("fs");
-var myFT = artifacts.require("./myNFT.sol");
+var myFT = artifacts.require("./myFT.sol");
 
 module.exports = function(deployer) {
 
