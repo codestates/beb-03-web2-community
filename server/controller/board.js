@@ -3,13 +3,13 @@ const contract= require('../contract/contract');
 // 게시판 DB 추가
 exports.insertBoard = (req, res) => {
 
-
     // 저장해야할 정보 가져오기
-    var title = req.body.title;
-    var content = req.body.content;
-    var username = req.body.username;
+    var title       = req.body.title;
+    var content     = req.body.content;
+    var username    = req.body.username;
+    var useremail   = req.body.useremail;
 
-	var boardData = new board({title:title,content:content,userName:username});
+	var boardData = new board({title:title, content:content, userName:username, userEmail:useremail});
 
     //mongodb 저장
     boardData.save((err)=>{
@@ -24,10 +24,8 @@ exports.insertBoard = (req, res) => {
         }
     })
 
+    //User Email로 해당 사용자 정보 조회 후 address정보를 받아와 토큰 전송
     //토큰 잔액조회 후 전송 테스트
-    console.log(contract.getBalance('0x1AcB74BdE9c0d593Fa3f6De408aa68A53c95918b'));
-    contract.setTransfer('0x1AcB74BdE9c0d593Fa3f6De408aa68A53c95918b',1000);
-    console.log(contract.getBalance('0x1AcB74BdE9c0d593Fa3f6De408aa68A53c95918b'));
 };
 
 // 게시판 DB 조회
