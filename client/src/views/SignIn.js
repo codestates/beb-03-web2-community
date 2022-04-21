@@ -1,15 +1,12 @@
 import React from 'react';
-import axios from 'axios';
 
-const SignUp = () => {
-  const onSubmit = () => {};
-
+const SignIn = () => {
   return (
     <div>
-      <span className="title">Sign Up</span>
-      <div className="mx-auto mt-10 w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
-        <div className="w-full">
-          <form className="max-w-md mb-4 mx-auto">
+      <span className="title">Sign In</span>
+      <div className="form-signup-dig mt-10">
+        <div className="w-full max-w-xs">
+          <form className="max-w-md mb-4 form-input">
             <div className="mb-4">
               <label
                 className="block text-grey-darker text-sm font-bold mb-2"
@@ -38,9 +35,18 @@ const SignUp = () => {
                 placeholder="******************"
               />
             </div>
-            <div className="w-full text-center">
+            <div className="flex items-center justify-between">
               <button
-                className="bg-blue-500 hover:bg-blue-900 text-white font-bold h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-500 hover:bg-blue-900 text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
+                type="button"
+              >
+                Sign In
+              </button>
+            </div>
+            <div>
+              <p>or sign up with</p>
+              <button
+                className="bg-gray-500 hover:bg-gray-900 text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
                 type="button"
               >
                 Sign Up
@@ -53,4 +59,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;
