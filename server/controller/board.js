@@ -1,14 +1,15 @@
-const board= require('../models/board');
-
+const board = require('../models/board');
+const contract= require('../contract/contract');
 // 게시판 DB 추가
 exports.insertBoard = (req, res) => {
 
     // 저장해야할 정보 가져오기
-    var title = req.body.title;
-    var content = req.body.content;
-    var username = req.body.username;
+    var title       = req.body.title;
+    var content     = req.body.content;
+    var username    = req.body.username;
+    var useremail   = req.body.useremail;
 
-	var boardData = new board({title:title,content:content,userName:username});
+	var boardData = new board({title:title, content:content, userName:username, userEmail:useremail});
 
     //mongodb 저장
     boardData.save((err)=>{
@@ -22,10 +23,13 @@ exports.insertBoard = (req, res) => {
             res.status(200).send(body);
         }
     })
+
+    //User Email로 해당 사용자 정보 조회 후 address정보를 받아와 토큰 전송
+    //토큰 잔액조회 후 전송 테스트
 };
 
 // 게시판 DB 조회
-exports.getBoard = (req, res) =>{
+exports.getBoard = async (req, res) =>{
 
     //변수 선언
     let title = "";
