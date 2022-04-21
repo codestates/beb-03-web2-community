@@ -43,13 +43,13 @@ exports.getBoard = async (req, res) =>{
     }
     //페이지당 조회 개수 입력
     if(req.query.count){
-        resultsPerPage = req.query.count;
+        resultsPerPage = parseInt(req.query.count);
     }
     //페이지 번호 조회
     if(req.query.page){
         page = req.query.page;
     }
-   
+       
     //mongodb 조회
     board.find({title:{$regex:title}})
         .limit(resultsPerPage)
@@ -60,6 +60,7 @@ exports.getBoard = async (req, res) =>{
             return res.status(200).send(body);
         })
         .catch((err) => {
+            console.log(err);
             body.message = "fail";
             body.err = err;
             return res.status(500).send(body);
