@@ -36,7 +36,6 @@ const Header = () => {
               alt=""
             />
           </Link>
-          {/* <!-- Left links --> */}
           <ul className="flex items-center items-center list-style-none ml-7">
             <li>
               <Link
@@ -56,16 +55,14 @@ const Header = () => {
             </li>
             <li>
               <Link
-                to="/board"
+                to="/boardList"
                 className="text-white hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
               >
                 Board
               </Link>
             </li>
           </ul>
-          {/* <!-- Left links --> */}
         </div>
-        {/* <!-- Collapsible wrapper --> */}
       </div>
     </nav>
   );
