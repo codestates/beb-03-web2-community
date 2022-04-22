@@ -9,8 +9,10 @@ web3 = new Web3(PROVIDER);
 var fs = require('fs');
 var abiFile = ABI_FILE_PATH;
 var addressFile = ADDRESS_FILE_PATH;
+
 var contractAbi= JSON.parse(fs.readFileSync(abiFile));
 var contractAddress = fs.readFileSync(addressFile).toString();
+
 
 
 //컨트랙트 연결
@@ -35,7 +37,7 @@ module.exports.setTransfer  = async function setTransfer(toAddress,amount){
         {from: CONTRACT_OWNER_ADDRESS, gasPrice: 100, gas: 100000},
         function(err, txhash){
             try{
-                console.log(txhash);
+                //console.log(txhash);
                 //여기서 나온 txhash 로 블록 조회 하고
                 //조회가 끝나면 잔액 체크 해주고
                 //바뀐 잔액을 DB로 업데이트 해준다. 
