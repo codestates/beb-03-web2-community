@@ -8,10 +8,7 @@ const Header = () => {
       <h1 className="logo">
         <Link
           to="/"
-          className=" text-gray-900
-                hover:text-gray-900
-                focus:text-gray-900
-              "
+          className=" text-gray-900 hover:text-gray-900 focus:text-gray-900"
         >
           <img src={Logo} alt="" className="w-24" />
         </Link>
