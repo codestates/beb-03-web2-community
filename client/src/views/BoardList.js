@@ -7,12 +7,12 @@ import { SET_BOARDLIST } from '../context/action';
 
 const BoardList = () => {
   const navigate = useNavigate();
-  const { dispatch } = useContext(Context);
+  const { dispatch, state } = useContext(Context);
   const [boardList, setBoardList] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  // const [search, setSearch] = useState('');
 
-  const onLinkItem = () => navigate(`/boardCreate`);
+  const onLinkItem = (pageNum) => navigate(`/board/${pageNum}`);
 
   const getList = async () => {
     try {
@@ -23,14 +23,15 @@ const BoardList = () => {
       setBoardList(result.data.data);
       dispatch({
         type: SET_BOARDLIST,
-        payload: boardList,
+        payload: result.data.data,
       });
+      console.log('boardList-List : ', state.boardList);
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
-  const onSearch = () => {};
+  // const onSearch = () => {};
 
   useEffect(() => {
     getList();
@@ -100,7 +101,7 @@ const BoardList = () => {
                     <tr key={index}>
                       <td
                         className="px-5 py-5 w-1/12 border-b border-gray-200 bg-white text-sm cursor-pointer"
-                        onClick={onLinkItem}
+                        onClick={() => onLinkItem(item.board_id)}
                       >
                         <p className="text-gray-900 whitespace-no-wrap">
                           {item.board_id}
@@ -108,7 +109,7 @@ const BoardList = () => {
                       </td>
                       <td
                         className="px-5 py-5 w-7/12 border-b border-gray-200 bg-white text-sm cursor-pointer"
-                        onClick={onLinkItem}
+                        onClick={() => onLinkItem(item.board_id)}
                       >
                         <p className="text-gray-900 whitespace-no-wrap">
                           {item.title}
@@ -116,7 +117,7 @@ const BoardList = () => {
                       </td>
                       <td
                         className="px-5 py-5 w-2/12 border-b border-gray-200 bg-white text-sm cursor-pointer"
-                        onClick={onLinkItem}
+                        onClick={() => onLinkItem(item.board_id)}
                       >
                         <p className="text-gray-900 whitespace-no-wrap">
                           {item.userName}
@@ -124,7 +125,7 @@ const BoardList = () => {
                       </td>
                       <td
                         className="px-5 py-5 w-2/12 border-b border-gray-200 bg-white text-sm cursor-pointer"
-                        onClick={onLinkItem}
+                        onClick={() => onLinkItem(item.board_id)}
                       >
                         <p className="text-gray-900 whitespace-no-wrap">
                           {item.createdAt.split('T')[0]}
