@@ -3,7 +3,7 @@ import { SET_BOARDLIST, SET_USER_INFO, CHANGE_LOGIN_STATUS } from './action';
 
 // context 초기화
 const initialState = {
-  userInfo: [],
+  userInfo: {},
   boardList: [],
   isLogin: false,
 };
