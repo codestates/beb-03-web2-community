@@ -1,6 +1,43 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../context/index';
+import { SET_USER_INFO, CHANGE_LOGIN_STATUS } from '../context/action';
 
 const SignIn = () => {
+  const { state, dispatch } = useContext(Context);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
+
+  const onSubmit = async () => {
+    try {
+      let result = await axios({
+        method: 'post',
+        url: 'http://localhost:8080/users/signin',
+        data: {
+          userEmail: email,
+          password: password,
+        },
+      });
+      console.log('result : ', result.data.result);
+      dispatch({
+        type: SET_USER_INFO,
+        payload: result.data.result,
+      });
+      dispatch({
+        type: CHANGE_LOGIN_STATUS,
+        payload: true,
+      });
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log('userInfo  :', state.userInfo);
+
   return (
     <div>
       <span className="title">Sign In</span>
@@ -19,6 +56,8 @@ const SignIn = () => {
                 id="email"
                 type="email"
                 placeholder="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-6">
@@ -33,24 +72,27 @@ const SignIn = () => {
                 id="pw"
                 type="password"
                 placeholder="******************"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="flex items-center justify-between">
               <button
                 className="bg-blue-500 hover:bg-blue-900 text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
                 type="button"
+                onClick={onSubmit}
               >
                 Sign In
               </button>
             </div>
             <div>
               <p>or sign up with</p>
-              <button
+              <Link
+                to="/signup"
                 className="bg-gray-500 hover:bg-gray-900 text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
-                type="button"
               >
                 Sign Up
-              </button>
+              </Link>
             </div>
           </form>
         </div>

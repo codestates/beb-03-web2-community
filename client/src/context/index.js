@@ -1,10 +1,11 @@
 import { createContext, useReducer } from 'react';
-import { SET_BOARDLIST, SET_USER_INFO } from './action';
+import { SET_BOARDLIST, SET_USER_INFO, CHANGE_LOGIN_STATUS } from './action';
 
 // context 초기화
 const initialState = {
   userInfo: [],
   boardList: [],
+  isLogin: false,
 };
 
 // Context 객체 생성 => Provider, Consumer 속성이 있다.
@@ -17,6 +18,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload,
+      };
+    case CHANGE_LOGIN_STATUS:
+      return {
+        ...state,
+        isLogin: action.payload,
       };
     case SET_BOARDLIST:
       return {
