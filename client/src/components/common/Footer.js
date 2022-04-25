@@ -8,8 +8,11 @@ const Footer = () => {
         // style={'background-color: rgba(0, 0, 0, 0.2);'}
       >
         © 2021 Copyright:
-        <a className="text-white" href="https://tailwind-elements.com/">
-          Tailwind Elements
+        <a
+          className="text-white"
+          href="https://github.com/codestates/beb-03-web2-community"
+        >
+          KDY Project
         </a>
       </div>
     </footer>

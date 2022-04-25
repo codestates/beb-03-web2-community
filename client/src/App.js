@@ -31,7 +31,7 @@ function App() {
           <Route path="/signin" element={<SignInView />} />
           <Route path="/boardList" element={<BoardListView />} />
           <Route path="/boardCreate" element={<BoardCreateView />} />
-          <Route path="/board:id" element={<BoardItemView />} />
+          <Route path="/board/:id" element={<BoardItemView />} />
         </Routes>
       </main>
       <Footer />
