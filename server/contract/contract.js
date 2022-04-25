@@ -22,7 +22,6 @@ var contract = new web3.eth.Contract(contractAbi,contractAddress);
 module.exports.getBalance  = async function getBalance(toAddress){
     try{  
        const balance = await contract.methods.balanceOf(toAddress).call();
-       console.log("To 주소의 토큰 잔액"+balance);
         return balance;      
     }catch (e) {
         console.log(e);
@@ -35,7 +34,7 @@ module.exports.setTransfer  = async function setTransfer(toAddress,amount){
     const result = await contract.methods.transfer(toAddress, parseInt(amount)).send(
         //from : 컨트랙트 발행인의 지갑주소
         {from: CONTRACT_OWNER_ADDRESS, gasPrice: 100, gas: 100000},
-        function(err, txhash){
+        (err, txhash)=>{
             try{
                 //console.log(txhash);
                 //여기서 나온 txhash 로 블록 조회 하고

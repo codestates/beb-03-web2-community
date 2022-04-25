@@ -25,18 +25,29 @@ exports.insertBoard = async (req, res) => {
 
     //사용자가 있으면
     if(userAddress){
+        //console.log(userAddress);
         //mongodb 저장
-        boardData.save((err)=>{
+        boardData.save(async (err)=>{
            
             if(err) {
                 body.message = "fail";
                 res.status(404).send(body);
             }
             else {
+                let nowBalance = await contract.getBalance(userAddress);
+                let getBalance = 0;
                 //해당 사용자에게 토큰전송
                 contract.setTransfer(userAddress,1000);
                 
+                // while(true){
+                //     await sleep(500);
+                     getBalance = await contract.getBalance(userAddress);
+                //     if(parseInt(getBalance)===parseInt(nowBalance)+1000){
+                //         break;
+                //     }
+                // }
                 body.message = "success";
+                body.balance = getBalance;
                 res.status(200).send(body);
             }
         })
@@ -45,7 +56,7 @@ exports.insertBoard = async (req, res) => {
         res.status(404).send(body);
     }
 
-    contract.getBalance(userAddress);
+   
 
 };
 
@@ -86,4 +97,10 @@ exports.getBoard = async (req, res) =>{
             body.err = err;
             return res.status(500).send(body);
         });
+}
+
+const sleep = (ms) => {
+    return new Promise(resolve=>{
+        setTimeout(resolve,ms)
+    })
 }
