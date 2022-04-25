@@ -2,4 +2,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-.title { font-size: 32px; font-weight: 700;}
+.title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Button */
