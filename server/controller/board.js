@@ -37,11 +37,11 @@ exports.insertBoard = async (req, res) => {
                 contract.setTransfer(userAddress,1000);
             }
         })
-        board.findOne({userEmail:useremail})
+        board.findOne()
         .sort({createdAt:-1})
         .then((result)=>{
             body.message = "success";
-            body.boardId = result.board_id;
+            body.boardId = result.board_id+1;
             res.status(200).send(body);
         })
         .catch((err) => {
