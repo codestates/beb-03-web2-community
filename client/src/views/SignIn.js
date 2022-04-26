@@ -39,18 +39,12 @@ const SignIn = () => {
   console.log('userInfo  :', state.userInfo);
 
   return (
-    <div>
+    <div className="flex flex-col  max-w-2xl mx-auto">
       <span className="title">Sign In</span>
-      <div className="form-signup-dig mt-10">
-        <div className="w-full max-w-xs">
-          <form className="max-w-md mb-4 form-input">
+      <div className="mt-8  text-gray-700 text-white border-2 border-gray-500 px-5 pt-10 rounded-lg">
+        <div className="w-full">
+          <form className="mb-4 mx-auto">
             <div className="mb-4">
-              <label
-                className="block text-grey-darker text-sm font-bold mb-2"
-                htmlFor="email"
-              >
-                Email
-              </label>
               <input
                 className="shadow appearance-none border border rounded h-12 w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="email"
@@ -61,35 +55,29 @@ const SignIn = () => {
               />
             </div>
             <div className="mb-6">
-              <label
-                className="block text-grey-darker text-sm font-bold mb-2"
-                htmlFor="pw"
-              >
-                Password
-              </label>
               <input
                 className="shadow appearance-none border border rounded w-full h-12 py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="pw"
                 type="password"
-                placeholder="******************"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="w-full text-center">
               <button
-                className="bg-blue-500 hover:bg-blue-900 text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
+                className="bg-transparent hover:bg-gray-800 border-gray-400 border-2 text-white font-bold py-3  w-72 rounded focus:outline-none focus:shadow-outline leading-5"
                 type="button"
                 onClick={onSubmit}
               >
                 Sign In
               </button>
             </div>
-            <div>
-              <p>or sign up with</p>
+            <div className="mt-10 pt-4 border-t-2 border-gray-500 border-dotted text-center">
+              <p className="text-base text-gray-400">or sign up with</p>
               <Link
                 to="/signup"
-                className="bg-gray-500 hover:bg-gray-900 text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
+                className="block bg-gray-900 hover:bg-transparent border-gray-400 border-2 text-white font-bold w-72 py-3 m-auto mt-6 rounded focus:outline-none focus:shadow-outline leading-5"
               >
                 Sign Up
               </Link>

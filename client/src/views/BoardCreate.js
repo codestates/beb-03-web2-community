@@ -2,9 +2,9 @@ import React from 'react';
 
 const BoardCreate = () => {
   return (
-    <div>
+    <div className="flex flex-col  max-w-2xl mx-auto">
       <span className="title"> BoardCreate</span>
-      <div className="editor mx-auto mt-10 w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+      <div className="editor flex flex-col text-gray-800 p-4 mt-8  text-gray-700 text-white border border-gray-500 px-5 pt-10 rounded-lg">
         <input
           className="bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
           placeholder="Title"
@@ -15,12 +15,18 @@ const BoardCreate = () => {
           placeholder="Describe everything about this post here"
         ></textarea>
         <div className="buttons flex mt-10">
-          <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">
+          <button
+            type="button"
+            className="btn border border-gray-300 text-gray-100 rounded p-1 px-4 font-semibold cursor-pointer ml-auto"
+          >
             Cancel
-          </div>
-          <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">
+          </button>
+          <button
+            type="button"
+            className="btn rounded p-1 px-4 font-semibold cursor-pointer text-gray-100 ml-2 bg-gray-900"
+          >
             Post
-          </div>
+          </button>
         </div>
       </div>
     </div>
