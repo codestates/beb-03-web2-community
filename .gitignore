@@ -30,3 +30,5 @@ address
 /server/.env
 server/package-lock.json
 client/src/contracts
+
+daemon/node_modules
