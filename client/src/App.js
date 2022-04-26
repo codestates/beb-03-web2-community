@@ -14,13 +14,14 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-gradient-to-r from-gray-900 to-gray-500">
       <Header />
       <main
         style={{
           width: '1400px',
           maxWidth: '100%',
-          minHeight: '100vh',
+          height: '100%',
+          minHeight: '86vh',
           margin: '0 auto',
           padding: '48px 32px',
         }}

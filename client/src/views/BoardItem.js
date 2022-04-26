@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../context/index';
 
 const BoardItem = () => {
   const { id } = useParams();
   const { state } = useContext(Context);
   const [item, setItem] = useState({});
+  const navigate = useNavigate();
 
   const getData = () => {
-    console.log(state.boardList);
+    console.log(state.boardList.list);
     let data =
-      state.boardList.length === 0
+      state.boardList.list.length === 0
         ? [{}]
-        : state.boardList.filter((item) => item.board_id.toString() === id);
+        : state.boardList.list.filter(
+            (item) => item.board_id.toString() === id
+          );
     setItem(data[0]);
   };
 
@@ -21,36 +24,40 @@ const BoardItem = () => {
   }, []);
 
   return (
-    <div>
-      <span className="title">BoardItem</span>
+    <div className="flex flex-col  max-w-2xl mx-auto">
       {JSON.stringify(item) === '{}' ? (
-        <div>
-          <p>
-            Missing Contents. Please{' '}
-            <Link to="/boardList" className="text-blue-500">
-              go back to BoardList
-            </Link>
-          </p>
-        </div>
+        navigate('/boardList')
       ) : (
-        <div className="bg-white border shadow-sm px-4 py-3 rounded-lg max-w-lg">
-          <div className="flex items-center  border-b border-gray-200">
-            <div className="ml-2">
-              <p className="post-tit">{item.title}</p>
-              <div className="text-sm ">
-                <span className="font-semibold">
-                  {item.userName ? item.userName : 'unknown'}
-                </span>
-                <span className="inline-block">
-                  {item.createdAt ? item.createdAt.split('T')[0] : ''}
-                </span>
+        <>
+          <span className="title">BoardItem</span>
+          <div className="mt-8 text-gray-700 bg-gray-100 text-white border-2 border-gray-500 p-5 rounded-lg">
+            <div className="flex items-center  border-b border-gray-200">
+              <div className="ml-2">
+                <p className="post-tit text-2xl font-bold">{item.title}</p>
+                <div className="mt-2 text-sm text-gray-500">
+                  <span>
+                    Writer :
+                    <em className="pl-2 font-bold not-italic">
+                      {item.userName ? item.userName : 'unknown'}
+                    </em>
+                  </span>
+                  <span className="inline-block ml-5">
+                    Date : {item.createdAt ? item.createdAt.split('T')[0] : ''}
+                  </span>
+                </div>
               </div>
             </div>
+            <p className="text-gray-800 text-sm mt-3 leading-normal md:leading-relaxed">
+              {item.content}
+            </p>
           </div>
-          <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed">
-            {item.content}
-          </p>
-        </div>
+          <Link
+            to="/boardList"
+            className="btn border border-gray-300 text-gray-100 rounded mt-5 p-1 px-4 font-semibold cursor-pointer ml-auto"
+          >
+            Back
+          </Link>
+        </>
       )}
     </div>
   );

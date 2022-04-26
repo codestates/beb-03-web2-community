@@ -2,9 +2,23 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+.header {
+  height: 82px;
+}
+
+.header-util::before {
+  content: '';
+  display: block;
+  background-color: #aaa;
+  width: 2px;
+  height: 20px;
+  margin-right: 1.25rem;
+}
+
 .title {
   font-size: 32px;
   font-weight: 700;
+  color: #fff;
 }
 
 /* Button */
