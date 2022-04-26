@@ -100,6 +100,17 @@ exports.signin = async (req, res) => {
     }); // end find Email
 }
 
+exports.signout = async(req, res) => {
+  // cookie 정보 없애기
+  if(req.cookies) {
+    res.clearCookie('x_auth');
+    res.json({ message: '로그아웃 되었습니다.'});
+    res.redirect('/');
+  } else {
+    res.json({ message: '로그인 상태가 아닙니다.'});
+  }
+}
+
 exports.userInfo = async (req, res) => {
     // cookie-parser로 cookie의 token 을 받아 회원정보를 조회한다.
     let token = req.cookies.x_auth;
