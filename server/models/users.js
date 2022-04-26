@@ -4,7 +4,6 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
-
 // Define Schemes
 const usersSchema = new mongoose.Schema({
   
@@ -44,7 +43,7 @@ usersSchema.pre("save", function (next) {
 });
 
 // singin 비밀번호 비교시 입력받은 비밀번호를 암호화해서 비교
-usersSchema.methods.comparePassword = function (plainPassword, callback) {
+usersSchema.methods.comparePassword = function (plainPassword) {
   // plainPassword를 암호화해서 현재 비밀번호와 비교
   return bcrypt
     .compare(plainPassword, this.password)
@@ -68,7 +67,7 @@ usersSchema.statics.findByToken = function (token) {
   // DB에 접근해서 유저의 정보를 가져온다
   return jwt.verify(token, "secretToken", function (err, decoded) {
     return user
-      .findOne({ _id: decoded, token: token })
+      .findOne({ _id: decoded })
       .then((user) => user)
       .catch((err) => err);
   });

@@ -3,7 +3,7 @@ require('dotenv').config();
 const {PROVIDER, CONTRACT_OWNER_ADDRESS, ABI_FILE_PATH, ADDRESS_FILE_PATH} = process.env;
 
 const Web3 = require("web3");
-web3 = new Web3(PROVIDER);
+let web3 = new Web3(PROVIDER);
 
 //ABI 파일, contract주소 가져오기
 var fs = require('fs');

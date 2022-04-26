@@ -1,6 +1,7 @@
 const board = require('../models/board');
 const users = require('../models/users');
-const contract= require('../contract/contract');
+const contract = require('../contract/contract');
+
 // 게시판 DB 추가
 exports.insertBoard = async (req, res) => {
     

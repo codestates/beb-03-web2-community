@@ -1,6 +1,6 @@
 const users = require('../models/users');
 const Web3 = require('web3');
-const web3 = new Web3('http://localhost:8545');
+const web3 = new Web3("http://localhost:7545/");
 
 exports.signup = async (req, res) => {
 
@@ -69,7 +69,7 @@ exports.signin = async (req, res) => {
           });
         }
         // 3. comparePassword  in DB
-        await userData
+        userData
           .comparePassword(password)
           .then((isMatch) => {
             if (!isMatch) {
@@ -79,7 +79,7 @@ exports.signin = async (req, res) => {
               });
             }
         // 4. 회원정보 모두 일치시 token generate
-        await userData
+        userData
               .generateToken()
               .then((userData) => {
 
@@ -100,18 +100,17 @@ exports.signin = async (req, res) => {
     }); // end find Email
 }
 
-exports.userInfo = async (req, res, next) => {
-
+exports.userInfo = async (req, res) => {
     // cookie-parser로 cookie의 token 을 받아 회원정보를 조회한다.
     let token = req.cookies.x_auth;
-    
+    console.log(token);
     await users
         .findByToken(token)
         .then((user) => {
         if (!user) return res.json({ isAuth: false, error: true });
           req.token = token;
           req.user = user;
-          next();
+          res.json({ userInfo: user });
         })
         .catch((err) => {
           res.status(400).send(err);
