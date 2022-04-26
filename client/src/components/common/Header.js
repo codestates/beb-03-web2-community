@@ -19,13 +19,13 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-900 w-full p-3 pl-10 pr-10 flex flex-wrap items-center justify-between">
-      <h1 className="logo">
+    <header className="header bg-gray-900 w-full p-3 pl-10 pr-10 flex flex-wrap items-center justify-right">
+      <h1 className="logo mr-auto">
         <Link
           to="/"
           className=" text-gray-900 hover:text-gray-900 focus:text-gray-900"
         >
-          <img src={Logo} alt="" className="w-24" />
+          <img src={Logo} alt="KDY logo" className="w-24" />
         </Link>
       </h1>
       <nav className="relative flex flex-wrap items-center justify-between text-white">
@@ -38,7 +38,7 @@ const Header = () => {
               <li>
                 <Link
                   to="/"
-                  className="text-white hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
+                  className="text-white font-bold text-lg hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
                 >
                   Home
                 </Link>
@@ -46,7 +46,7 @@ const Header = () => {
               <li>
                 <Link
                   to="/boardList"
-                  className="text-white hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
+                  className="text-white font-bold text-lg hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
                 >
                   Board
                 </Link>
@@ -58,7 +58,7 @@ const Header = () => {
                   <li className="bf-login">
                     <Link
                       to="/signin"
-                      className="text-white hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
+                      className="text-white font-bold text-lg hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
                     >
                       SignIn
                     </Link>
@@ -66,7 +66,7 @@ const Header = () => {
                   <li className="bf-login">
                     <Link
                       to="/signup"
-                      className="text-white hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
+                      className="text-white font-bold text-lg hover:text-gray-500 focus:text-gray-500 pl-3 pr-3"
                     >
                       Signup
                     </Link>
@@ -78,12 +78,18 @@ const Header = () => {
         </div>
       </nav>
       {state.isLogin ? (
-        <div className="af-login flex items-center items-center list-style-none ml-7">
-          <span className="text-white pr-3">{state.userInfo.userName}님 </span>
+        <div className="header-util af-login flex items-center items-center list-style-none ml-7">
           <span className="text-white pr-3">
-            Balance : {state.userInfo.balance}
+            {state.userInfo.userName || '---'}님
           </span>
-          <button type="button" className="bg-gray-100" onClick={onLogout}>
+          <span className="text-white pr-3">
+            Balance : {state.userInfo.balance || 0}
+          </span>
+          <button
+            type="button"
+            className="bg-gray-100 ml-3 p-1 rounded"
+            onClick={onLogout}
+          >
             Logout
           </button>
         </div>

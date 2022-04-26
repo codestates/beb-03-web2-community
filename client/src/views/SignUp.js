@@ -29,34 +29,22 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col  max-w-2xl mx-auto">
       <span className="title">Sign Up</span>
-      <div className="mx-auto mt-10 w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+      <div className="mt-8  text-gray-700 text-white border-2 border-gray-500 px-5 pt-10 rounded-lg">
         <div className="w-full">
-          <form className="max-w-md mb-4 mx-auto">
+          <form className="mb-4 mx-auto">
             <div className="mb-4">
-              <label
-                className="block text-grey-darker text-sm font-bold mb-2"
-                htmlFor="username"
-              >
-                User Name
-              </label>
               <input
                 className="shadow appearance-none border border rounded h-12 w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="username"
                 type="text"
-                placeholder="User Nam"
+                placeholder="User Name"
                 value={username}
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
             <div className="mb-4">
-              <label
-                className="block text-grey-darker text-sm font-bold mb-2"
-                htmlFor="email"
-              >
-                Email
-              </label>
               <input
                 className="shadow appearance-none border border rounded h-12 w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="email"
@@ -67,24 +55,18 @@ const SignUp = () => {
               />
             </div>
             <div className="mb-6">
-              <label
-                className="block text-grey-darker text-sm font-bold mb-2"
-                htmlFor="pw"
-              >
-                Password
-              </label>
               <input
                 className="shadow appearance-none border border rounded w-full h-12 py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="pw"
                 type="password"
-                placeholder="******************"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="w-full text-center">
               <button
-                className="bg-blue-500 hover:bg-blue-900 text-white font-bold h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
+                className="bg-transparent hover:bg-gray-800 border-gray-400 border-2 text-white font-bold py-3 px-24 ml-4 rounded focus:outline-none focus:shadow-outline leading-5"
                 type="button"
                 onClick={onSubmit}
               >
