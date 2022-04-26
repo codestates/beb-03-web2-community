@@ -100,7 +100,7 @@ exports.signin = async (req, res) => {
     }); // end find Email
 }
 
-exports.signout = async(req, res) => {
+exports.signout = (req, res) => {
   // cookie 정보 없애기
   if(req.cookies) {
     res.clearCookie('x_auth');
