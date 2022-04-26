@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
                             userEmail: userEmail,
                             userName: userName, 
                             password: password, 
-                            address: account.address,
+                            address: account.address.toLowerCase(),
                             privateKey: account.privateKey })
 
         await usersData.save((err) => {
