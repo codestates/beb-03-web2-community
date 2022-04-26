@@ -84,6 +84,7 @@ exports.getBoard = async (req, res) =>{
     board.find({title:{$regex:title}})
         .limit(resultsPerPage)
         .skip(resultsPerPage * page)
+        .sort({board_id:-1})
         .then((results) => {
             body.message = "success";
             body.data = results;
