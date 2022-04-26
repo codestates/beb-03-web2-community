@@ -5,6 +5,7 @@ const {PROVIDER, CONTRACT_OWNER_ADDRESS, CONTRACT_OWNER_ADDRESS_PRIVATE_KEY, ABI
 const Web3 = require("web3");
 const web3 = new Web3(PROVIDER);
 
+
 //ABI 파일, contract주소 가져오기
 var fs = require('fs');
 var abiFile = ABI_FILE_PATH;
