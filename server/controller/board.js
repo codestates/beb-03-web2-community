@@ -28,29 +28,27 @@ exports.insertBoard = async (req, res) => {
         //console.log(userAddress);
         //mongodb 저장
         boardData.save(async (err)=>{
-           
             if(err) {
                 body.message = "fail";
                 res.status(404).send(body);
             }
             else {
-                let nowBalance = await contract.getBalance(userAddress);
-                let getBalance = 0;
                 //해당 사용자에게 토큰전송
                 contract.setTransfer(userAddress,1000);
-                
-                // while(true){
-                //     await sleep(500);
-                     getBalance = await contract.getBalance(userAddress);
-                //     if(parseInt(getBalance)===parseInt(nowBalance)+1000){
-                //         break;
-                //     }
-                // }
-                body.message = "success";
-                body.balance = getBalance;
-                res.status(200).send(body);
             }
         })
+        board.findOne({userEmail:useremail})
+        .sort({createdAt:-1})
+        .then((result)=>{
+            body.message = "success";
+            body.boardId = result.board_id;
+            res.status(200).send(body);
+        })
+        .catch((err) => {
+            body.message = "fail";
+            body.err = err;
+            return res.status(500).send(body);
+        });
     }else{
         body.message = "Not Match User";
         res.status(404).send(body);
