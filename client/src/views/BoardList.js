@@ -3,14 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../components/Loading';
 import { Context } from '../context/index';
-import { SET_BOARDLIST } from '../context/action';
+import { SET_BOARDLIST, SET_PAGINATION } from '../context/action';
 
 const BoardList = () => {
   const navigate = useNavigate();
   const { dispatch, state } = useContext(Context);
   const [boardList, setBoardList] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  // const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('');
 
   const onLinkItem = (pageNum) => navigate(`/board/${pageNum}`);
 
@@ -18,12 +18,12 @@ const BoardList = () => {
     try {
       let result = await axios({
         method: 'get',
-        url: 'http://localhost:8080/board/list',
+        url: `http://localhost:8080/board/list?page=1&count=15`,
       });
       setBoardList(result.data.data);
       dispatch({
         type: SET_BOARDLIST,
-        payload: result.data.data,
+        payload: { page: 1, list: result.data.data },
       });
       console.log('boardList-List : ', state.boardList);
       setLoading(false);
@@ -31,42 +31,80 @@ const BoardList = () => {
       console.log(err);
     }
   };
-  // const onSearch = () => {};
+
+  const onSearch = async (page) => {
+    try {
+      setLoading(true);
+      let result = await axios({
+        method: 'get',
+        url: `http://localhost:8080/board/list?page=${page}&count=15&title=${search}`,
+      });
+      console.log('result ', result.data.data);
+      setBoardList(result.data.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onPaging = async () => {
+    try {
+      setLoading(true);
+      console.log('state : ', state.boardList.page);
+      let num = state.boardList.page + 1;
+      let result = await axios({
+        method: 'get',
+        url: `http://localhost:8080/board/list?page=${num}&count=15&title=${search}`,
+      });
+      let list = state.boardList.list.concat(result.data.data);
+      setBoardList(list);
+      dispatch({
+        type: SET_PAGINATION,
+        payload: { page: num, list: result.data.data },
+      });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     getList();
   }, []);
 
   return (
-    <div>
+    <div className="relative">
       <span className="title">BoardList</span>
       {isLoading ? (
         <Loading />
       ) : (
         <div className="mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto min-w-min">
-          <div className="board-util flex items-center justify-end">
+          <div className="absolute top-2 right-0 board-util flex items-center justify-end">
             <div className="relative text-gray-600">
               <input
                 className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                 type="search"
                 name="search"
                 placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
               <a
                 href="#"
                 className="btn-search absolute right-0 top-0 w-16 h-10 bg-gray-300 text-sm text-center leading-10 rounded-lg"
+                onClick={onSearch}
               >
                 Search
               </a>
             </div>
             <Link
               to="/boardCreate"
-              className="bg-gray-700 hover:bg-gray-700 text-white font-bold w- h-10 py-2 px-4 ml-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-transparent hover:bg-gray-700 border-gray-300 border-2 text-white font-bold w- h-10 py-2 px-4 ml-4 rounded focus:outline-none focus:shadow-outline leading-5 "
             >
               Create Post
             </Link>
           </div>
-          <div className="inline-block min-w-full mt-6 shadow rounded-lg overflow-hidden">
+          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
             <table className="min-w-full leading-normal">
               <thead>
                 <tr>
@@ -137,12 +175,13 @@ const BoardList = () => {
               </tbody>
             </table>
           </div>
-          <div className="w-full text-right">
+          <div className="w-full mt-4 text-center">
             <button
-              className="bg-gray-500 hover:bg-gray-900 text-white font-bold w-40 h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline"
+              className="bg-transparent hover:bg-gray-700 border-gray-300 border-2 text-white font-bold py-2 px-24 ml-4 rounded focus:outline-none focus:shadow-outline leading-5"
               type="button"
+              onClick={onPaging}
             >
-              More...
+              + More
             </button>
           </div>
         </div>
