@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../context/index';
 import { SET_USER_INFO, CHANGE_LOGIN_STATUS } from '../context/action';
 
+axios.defaults.withCredentials = true;
 const SignIn = () => {
   const { state, dispatch } = useContext(Context);
   const [email, setEmail] = useState('');
@@ -21,22 +22,29 @@ const SignIn = () => {
           password: password,
         },
       });
-      console.log('result : ', result.data.result);
-      dispatch({
-        type: SET_USER_INFO,
-        payload: result.data.result,
-      });
-      dispatch({
-        type: CHANGE_LOGIN_STATUS,
-        payload: true,
-      });
-      navigate('/');
+
+      if (result.data.loginSuccess) {
+        let result = await axios({
+          method: 'get',
+          url: 'http://localhost:8080/users/userInfo',
+        });
+        console.log(result);
+        dispatch({
+          type: SET_USER_INFO,
+          payload: result.data.userInfo,
+        });
+        dispatch({
+          type: CHANGE_LOGIN_STATUS,
+          payload: true,
+        });
+        navigate('/');
+      } else {
+        alert(result.data.message);
+      }
     } catch (err) {
       console.log(err);
     }
   };
-
-  console.log('userInfo  :', state.userInfo);
 
   return (
     <div className="flex flex-col  max-w-2xl mx-auto">
