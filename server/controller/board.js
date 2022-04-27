@@ -1,6 +1,7 @@
 const board = require('../models/board');
 const users = require('../models/users');
-const contract= require('../contract/contract');
+const contract = require('../contract/contract');
+
 // 게시판 DB 추가
 exports.insertBoard = async (req, res) => {
     
@@ -28,29 +29,27 @@ exports.insertBoard = async (req, res) => {
         //console.log(userAddress);
         //mongodb 저장
         boardData.save(async (err)=>{
-           
             if(err) {
                 body.message = "fail";
                 res.status(404).send(body);
             }
             else {
-                let nowBalance = await contract.getBalance(userAddress);
-                let getBalance = 0;
                 //해당 사용자에게 토큰전송
                 contract.setTransfer(userAddress,1000);
-                
-                // while(true){
-                //     await sleep(500);
-                     getBalance = await contract.getBalance(userAddress);
-                //     if(parseInt(getBalance)===parseInt(nowBalance)+1000){
-                //         break;
-                //     }
-                // }
-                body.message = "success";
-                body.balance = getBalance;
-                res.status(200).send(body);
             }
         })
+        board.findOne()
+        .sort({createdAt:-1})
+        .then((result)=>{
+            body.message = "success";
+            body.boardId = result.board_id+1;
+            res.status(200).send(body);
+        })
+        .catch((err) => {
+            body.message = "fail";
+            body.err = err;
+            return res.status(500).send(body);
+        });
     }else{
         body.message = "Not Match User";
         res.status(404).send(body);
@@ -86,6 +85,7 @@ exports.getBoard = async (req, res) =>{
     board.find({title:{$regex:title}})
         .limit(resultsPerPage)
         .skip(resultsPerPage * page)
+        .sort({board_id:-1})
         .then((results) => {
             body.message = "success";
             body.data = results;
