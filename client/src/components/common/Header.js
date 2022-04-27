@@ -12,6 +12,7 @@ import {
   CHANGE_LOGIN_STATUS,
 } from '../../context/action';
 
+axios.defaults.withCredentials = true;
 library.add(faRotate);
 
 const Header = () => {
