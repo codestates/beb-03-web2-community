@@ -11,6 +11,8 @@ const BoardList = () => {
   const [boardList, setBoardList] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [type, setType] = useState('page');
+  const [btnActive, setBtnActive] = useState(true);
 
   const onLinkItem = (pageNum) => navigate(`/board/${pageNum}`);
 
@@ -18,7 +20,7 @@ const BoardList = () => {
     try {
       let result = await axios({
         method: 'get',
-        url: `http://localhost:8080/board/list?page=1&count=15`,
+        url: `http://localhost:8080/board/list?count=15`,
       });
       setBoardList(result.data.data);
       dispatch({
@@ -26,21 +28,27 @@ const BoardList = () => {
         payload: { page: 1, list: result.data.data },
       });
       console.log('boardList-List : ', state.boardList);
+      setType('page');
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const onSearch = async (page) => {
+  const onSearch = async () => {
     try {
       setLoading(true);
       let result = await axios({
         method: 'get',
-        url: `http://localhost:8080/board/list?page=${page}&count=15&title=${search}`,
+        url: `http://localhost:8080/board/list?count=15&title=${search}`,
       });
-      console.log('result ', result.data.data);
+      console.log('result ', result);
       setBoardList(result.data.data);
+      dispatch({
+        type: SET_BOARDLIST,
+        payload: { page: 1, list: result.data.data },
+      });
+      setType('search');
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -49,20 +57,29 @@ const BoardList = () => {
 
   const onPaging = async () => {
     try {
-      setLoading(true);
-      console.log('state : ', state.boardList.page);
-      let num = state.boardList.page + 1;
-      let result = await axios({
-        method: 'get',
-        url: `http://localhost:8080/board/list?page=${num}&count=15&title=${search}`,
-      });
-      let list = state.boardList.list.concat(result.data.data);
-      setBoardList(list);
-      dispatch({
-        type: SET_PAGINATION,
-        payload: { page: num, list: result.data.data },
-      });
-      setLoading(false);
+      if (boardList.length > 14) {
+        let page = state.boardList.page + 1;
+        let urlAddress =
+          type === 'page'
+            ? `http://localhost:8080/board/list?page=${page}&count=15`
+            : `http://localhost:8080/board/list?page=${page}&count=15&title=${search}`;
+        setLoading(true);
+        let result = await axios({
+          method: 'get',
+          url: urlAddress,
+        });
+        let list = state.boardList.list.concat(result.data.data);
+        console.log('state.bordList', state.bordList);
+        setBoardList(list);
+        dispatch({
+          type: SET_PAGINATION,
+          payload: { page: page, list: result.data.data },
+        });
+        setBtnActive(true);
+        setLoading(false);
+        // } else {
+        setBtnActive(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -177,7 +194,11 @@ const BoardList = () => {
           </div>
           <div className="w-full mt-4 text-center">
             <button
-              className="bg-transparent hover:bg-gray-700 border-gray-300 border-2 text-white font-bold py-2 px-24 ml-4 rounded focus:outline-none focus:shadow-outline leading-5"
+              className={` font-bold py-2 px-24 ml-4 rounded focus:outline-none focus:shadow-outline leading-5 ${
+                boardList.length > 14
+                  ? 'bg-transparent hover:bg-gray-700 border-gray-300 border-2 text-white'
+                  : 'bg-gray-700 text-gray-500'
+              }`}
               type="button"
               onClick={onPaging}
             >
