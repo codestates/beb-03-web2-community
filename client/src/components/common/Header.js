@@ -1,20 +1,55 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faRotate } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../../assets/logo.png';
 import { Context } from '../../context/index';
-import { SET_USER_INFO, CHANGE_LOGIN_STATUS } from '../../context/action';
+import {
+  SET_USER_INFO,
+  DELETE_USER_INFO,
+  CHANGE_LOGIN_STATUS,
+} from '../../context/action';
+
+library.add(faRotate);
 
 const Header = () => {
   const { state, dispatch } = useContext(Context);
+  const navigate = useNavigate();
 
-  const onLogout = () => {
+  const onSignOut = async () => {
+    try {
+      let result = await axios({
+        method: 'post',
+        url: 'http://localhost:8080/users/signout',
+      });
+
+      alert(result.data.message);
+      dispatch({
+        type: DELETE_USER_INFO,
+        payload: {},
+      });
+      dispatch({
+        type: CHANGE_LOGIN_STATUS,
+        payload: false,
+      });
+      navigate('/signin');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const onFresh = async () => {
+    let result = await axios({
+      method: 'get',
+      url: 'http://localhost:8080/users/userInfo',
+    });
+    console.log(result);
+
     dispatch({
       type: SET_USER_INFO,
-      payload: {},
-    });
-    dispatch({
-      type: CHANGE_LOGIN_STATUS,
-      payload: false,
+      payload: result.data.userInfo,
     });
   };
 
@@ -84,11 +119,14 @@ const Header = () => {
           </span>
           <span className="text-white pr-3">
             Balance : {state.userInfo.balance || 0}
+            <button type="button" className="btn sync" onClick={onFresh}>
+              <FontAwesomeIcon icon="fa-solid fa-rotate" />
+            </button>
           </span>
           <button
             type="button"
             className="bg-gray-100 ml-3 p-1 rounded"
-            onClick={onLogout}
+            onClick={onSignOut}
           >
             Logout
           </button>
