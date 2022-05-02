@@ -24,3 +24,11 @@ yarn-debug.log*
 yarn-error.log*
 
 package-lock.json
+ABI
+address
+/server/node_modules
+/server/.env
+server/package-lock.json
+client/src/contracts
+
+daemon/node_modules
